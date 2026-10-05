@@ -349,16 +349,17 @@ body {
 }
 
 .diagram-pre {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.76rem;
-  line-height: 1.45;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
   background: var(--bg-primary);
   color: var(--text-primary);
-  padding: 12px;
+  padding: 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   overflow-x: auto;
   white-space: pre;
+  letter-spacing: 0.02em;
   -webkit-overflow-scrolling: touch;
 }
 

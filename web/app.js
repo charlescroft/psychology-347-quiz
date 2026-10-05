@@ -107,6 +107,7 @@
     syncLoggedArea: document.getElementById('sync-logged-area'),
     syncUsernameInput: document.getElementById('sync-username-input'),
     syncPasswordInput: document.getElementById('sync-password-input'),
+    syncAuthcodeInput: document.getElementById('sync-authcode-input'),
     btnDoLogin: document.getElementById('btn-do-login'),
     btnDoManualSync: document.getElementById('btn-do-manual-sync'),
     btnDoLogout: document.getElementById('btn-do-logout'),
@@ -259,6 +260,7 @@
         body: JSON.stringify({
           username: state.user.username,
           password: state.user.password,
+          authCode: state.user.authCode || '',
           payload: clientPayload,
         }),
       });
@@ -300,15 +302,21 @@
   async function handleLoginSync() {
     const username = (els.syncUsernameInput.value || '').trim();
     const password = (els.syncPasswordInput.value || '').trim();
+    const authCode = (els.syncAuthcodeInput ? els.syncAuthcodeInput.value : '').trim();
 
     if (!username) {
       alert('请输入同步用户名');
+      return;
+    }
+    if (!authCode && !(state.user && state.user.authCode)) {
+      alert('请输入专属授权认证码（首次绑定多端同步必须提供，如向管理员索取）');
       return;
     }
 
     state.user = {
       username: username,
       password: password,
+      authCode: authCode || (state.user && state.user.authCode) || '',
       lastSyncTime: 0,
     };
 
@@ -317,7 +325,7 @@
 
   function handleLogout() {
     if (confirm('确认退出登录并切回本地离线模式？本地数据不会被清除。')) {
-      state.user = { username: '', password: '', lastSyncTime: 0 };
+      state.user = { username: '', password: '', authCode: '', lastSyncTime: 0 };
       saveLocalData();
       updateSyncButtonState();
       closeSyncModal();

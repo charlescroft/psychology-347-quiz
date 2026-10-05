@@ -2,6 +2,7 @@
  * Cloudflare Worker for Psychology 347 Quiz System
  * - Serves Static Assets for Frontend SPA
  * - Provides KV-backed multi-device cloud synchronization API (/api/user/sync)
+ * - Protected by Admin Authorization / Invite Code (AUTH_CODES) to prevent KV storage abuse
  */
 
 export default {
@@ -29,6 +30,20 @@ export default {
   },
 };
 
+function isAuthCodeValid(env, inputCode) {
+  const raw = env.AUTH_CODES || env.AUTH_CODE || '';
+  const allowed = raw
+    .split(',')
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+
+  // If no auth code configured in environment, allow by default
+  if (allowed.length === 0) return true;
+
+  const given = (inputCode || '').trim().toLowerCase();
+  return allowed.includes(given);
+}
+
 async function handleSyncApi(request, env, url) {
   const corsHeaders = {
     'Content-Type': 'application/json; charset=utf-8',
@@ -46,6 +61,7 @@ async function handleSyncApi(request, env, url) {
   if (request.method === 'GET') {
     const username = (url.searchParams.get('username') || '').trim().toLowerCase();
     const password = (url.searchParams.get('password') || '').trim();
+    const authCode = (url.searchParams.get('authCode') || url.searchParams.get('inviteCode') || '').trim();
 
     if (!username) {
       return new Response(
@@ -59,7 +75,11 @@ async function handleSyncApi(request, env, url) {
 
     if (!rawRecord) {
       return new Response(
-        JSON.stringify({ success: false, isNewUser: true, message: '未找到该用户的云端记录，首次登录可直接上传同步' }),
+        JSON.stringify({
+          success: false,
+          isNewUser: true,
+          message: '未找到该用户的云端记录，首次绑定请输入管理员分发的授权认证码',
+        }),
         { status: 404, headers: corsHeaders }
       );
     }
@@ -91,6 +111,7 @@ async function handleSyncApi(request, env, url) {
       const body = await request.json();
       const username = (body.username || '').trim().toLowerCase();
       const password = (body.password || '').trim();
+      const authCode = (body.authCode || body.inviteCode || '').trim();
       const clientPayload = body.payload || {};
 
       if (!username) {
@@ -105,7 +126,20 @@ async function handleSyncApi(request, env, url) {
 
       let finalPayload = clientPayload;
 
-      if (rawRecord) {
+      if (!rawRecord) {
+        // New user registration -> Must supply valid authorization code!
+        if (!isAuthCodeValid(env, authCode)) {
+          return new Response(
+            JSON.stringify({
+              success: false,
+              code: 'INVALID_AUTH_CODE',
+              message: '授权认证码无效或未提供。为防止云端存储滥用，首次创建或绑定多端同步需向管理员索取有效授权码。',
+            }),
+            { status: 403, headers: corsHeaders }
+          );
+        }
+      } else {
+        // Existing user -> verify password and optional re-auth
         const record = JSON.parse(rawRecord);
         if (record.password && record.password !== password) {
           return new Response(
@@ -122,6 +156,7 @@ async function handleSyncApi(request, env, url) {
       const recordToSave = {
         username: username,
         password: password,
+        authCode: authCode || 'authorized',
         payload: finalPayload,
         updatedAt: Date.now(),
       };
@@ -131,7 +166,7 @@ async function handleSyncApi(request, env, url) {
       return new Response(
         JSON.stringify({
           success: true,
-          message: rawRecord ? '云端数据双向合并同步成功' : '新用户初始化注册与同步成功',
+          message: rawRecord ? '云端数据双向合并同步成功' : '授权认证成功，新用户档案已创建',
           payload: finalPayload,
           updatedAt: recordToSave.updatedAt,
         }),
@@ -155,7 +190,6 @@ async function handleSyncApi(request, env, url) {
  * Intelligent Two-Way Payload Merge
  */
 function mergePayloads(cloud, client) {
-  // Merge userAnswers (keep answer with newer timestamp)
   const mergedAnswers = { ...(cloud.answers || {}) };
   const clientAnswers = client.answers || {};
 
@@ -173,7 +207,6 @@ function mergePayloads(cloud, client) {
     }
   });
 
-  // Union of Sets for stars, wrongs, mastered
   const mergedStars = Array.from(new Set([...(cloud.stars || []), ...(client.stars || [])]));
   const mergedWrongs = Array.from(new Set([...(cloud.wrongs || []), ...(client.wrongs || [])]));
   const mergedMastered = Array.from(new Set([...(cloud.mastered || []), ...(client.mastered || [])]));

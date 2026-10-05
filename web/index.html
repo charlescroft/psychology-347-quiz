@@ -202,8 +202,12 @@
             <label for="sync-password-input">同步密钥 / 密码：</label>
             <input type="password" id="sync-password-input" placeholder="输入同步密钥 (多设备保持一致即可)" autocomplete="current-password" />
           </div>
+          <div class="form-group">
+            <label for="sync-authcode-input">🔐 授权认证码 (防滥用)：</label>
+            <input type="text" id="sync-authcode-input" placeholder="请输入管理员分发的专属授权码" />
+          </div>
           <div class="sync-tip-box">
-            💡 <b>说明</b>：登录不是必须的。不登录时数据完整保存在手机本地；在多台手机、电脑上输入相同的用户名与密码，即可一键多端双向同步做题记录、收藏夹与错题本！
+            💡 <b>说明</b>：登录不是必须的。不登录时数据完整保存在手机本地；如需多端云同步，请向管理员索取专属授权认证码，在多台设备上输入相同的用户名、密码与授权码即可双向同步。
           </div>
           <div class="form-actions" id="sync-form-actions">
             <button id="btn-do-login" class="action-btn primary" style="width:100%;">绑定并拉取云端同步</button>

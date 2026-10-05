@@ -7,6 +7,10 @@ account_id = "697914996ff10a8db042bceddf4fb126"
 directory = "./web"
 binding = "ASSETS"
 
+[vars]
+# 授权认证码（防滥用，多个可用逗号隔开；已撤销先前示例，您可随时在下方修改为您专属的分发密钥并重新部署）
+AUTH_CODES = "swjtu347_master_vip,cf_auth_2026"
+
 [[kv_namespaces]]
 binding = "PSYCH_KV"
 id = "cb742ba3265946039f62c39b38e72206"

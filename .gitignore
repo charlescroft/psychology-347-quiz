@@ -1,0 +1,28 @@
+# Virtual environment
+.venv/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Large binary files
+*.pdf
+*.zip
+*.dmg
+*.tar.gz
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Cloudflare Wrangler
+.wrangler/
+node_modules/
+
+# Local env files
+*.env.local

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>心理学导论 · 全章节刷题与背诵系统 (347备考)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- App Container -->
+  <div id="app">
+    <!-- Sticky Header -->
+    <header class="app-header">
+      <div class="header-top">
+        <button id="btn-drawer" class="icon-btn" aria-label="打开章节目录">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <div class="header-title-wrap">
+          <h1 id="current-chapter-title">第一章 绪论</h1>
+          <span id="current-chapter-subtitle" class="sub-badge">18章完整真题知识点</span>
+        </div>
+        <div class="header-actions">
+          <button id="btn-search-toggle" class="icon-btn" aria-label="搜索">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+          <button id="btn-theme" class="icon-btn" aria-label="切换明暗主题">
+            <span id="theme-icon">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Bar Dropdown -->
+      <div id="search-bar" class="search-bar hidden">
+        <input type="text" id="search-input" placeholder="搜索题目、考点、人名（如：皮亚杰、耶克斯）..." />
+        <button id="btn-search-clear" class="clear-btn">&times;</button>
+      </div>
+
+      <!-- Navigation & Mode Tabs -->
+      <div class="tabs-row">
+        <div class="mode-tabs">
+          <button class="mode-tab active" data-mode="practice">📝 刷题练习</button>
+          <button class="mode-tab" data-mode="random">🎲 随机模考</button>
+          <button class="mode-tab" data-mode="recite">📖 背诵速记</button>
+          <button class="mode-tab" data-mode="wrong">❌ 错题本 (<span id="wrong-count">0</span>)</button>
+          <button class="mode-tab" data-mode="star">⭐ 收藏 (<span id="star-count">0</span>)</button>
+        </div>
+      </div>
+
+      <!-- Question Type Filter Tabs -->
+      <div class="filter-row">
+        <button class="filter-chip active" data-type="all">全部题型 (<span id="total-type-count">0</span>)</button>
+        <button class="filter-chip" data-type="choice">选择题 (<span id="choice-type-count">0</span>)</button>
+        <button class="filter-chip" data-type="judge">判断题 (<span id="judge-type-count">0</span>)</button>
+        <button class="filter-chip" data-type="blank">填空题 (<span id="blank-type-count">0</span>)</button>
+        <button class="filter-chip" data-type="short">简答题 (<span id="short-type-count">0</span>)</button>
+      </div>
+
+      <!-- Global Progress Bar -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-main" id="main-scroll">
+      <!-- Chapter Summary Banner with Diagram Button -->
+      <div class="chapter-desc-banner" id="chapter-desc-banner">
+        <div class="desc-header-row">
+          <div class="desc-badge">章节重点</div>
+          <button id="btn-toggle-diagram" class="diagram-toggle-btn">📐 查看核心关系图解</button>
+        </div>
+        <p id="chapter-desc-text">心理学性质、心理现象划分、研究方法与历史学派</p>
+      </div>
+
+      <!-- Collapsible Chapter Diagram Box -->
+      <div id="chapter-diagram-box" class="chapter-diagram-box hidden">
+        <div class="diagram-box-header">
+          <span class="diagram-box-title">📐 核心知识结构与关系图谱</span>
+          <button id="btn-close-diagram" class="icon-btn small">&times;</button>
+        </div>
+        <pre id="diagram-content" class="diagram-pre"></pre>
+      </div>
+
+      <!-- Random Exam Controller Banner (shown in random mode) -->
+      <div id="random-exam-panel" class="random-exam-panel hidden">
+        <div class="exam-panel-header">
+          <div>
+            <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--accent-color);">🎲 全真随机抽题模考</h3>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">跨章节自动打乱抽样，检验综合掌握度</span>
+          </div>
+          <span id="exam-timer" class="exam-timer">⏱️ 00:00</span>
+        </div>
+        <div class="exam-config-row">
+          <button class="exam-config-btn active" data-exam-type="rotation_18">18章全卷轮转 (每章1题/共18题)</button>
+          <button class="exam-config-btn" data-exam-type="random_30">高频冲刺模考 (随机30题)</button>
+          <button class="exam-config-btn" data-exam-type="random_50">深度综合大模考 (随机50题)</button>
+        </div>
+        <div class="exam-actions-row">
+          <button id="btn-re-sample" class="action-btn outline">🔄 换一批随机题</button>
+          <button id="btn-submit-exam" class="action-btn primary">📊 提交交卷 & 查看诊断报告</button>
+        </div>
+      </div>
+
+      <!-- Questions List Container -->
+      <div id="questions-container" class="questions-list">
+        <!-- Dynamic Cards Inserted by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">🔍</div>
+        <h3>暂无符合条件的题目</h3>
+        <p>可以尝试切换题型过滤或搜索关键词</p>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Floating Bar -->
+    <footer class="app-footer">
+      <div class="footer-stats">
+        <span>已练习: <b id="stat-answered">0</b>/<span id="stat-total">117</span></span>
+        <span class="sep">•</span>
+        <span>正确率: <b id="stat-accuracy">0%</b></span>
+      </div>
+      <div class="footer-actions">
+        <button id="btn-prev-chapter" class="nav-btn">‹ 上一章</button>
+        <button id="btn-quick-nav" class="nav-btn primary">目录 (18章)</button>
+        <button id="btn-next-chapter" class="nav-btn">下一章 ›</button>
+      </div>
+    </footer>
+
+    <!-- Chapter Drawer Modal -->
+    <div id="drawer-overlay" class="drawer-overlay hidden">
+      <div class="drawer-content">
+        <div class="drawer-header">
+          <h2>📚 章节全览导航 (18章)</h2>
+          <button id="btn-drawer-close" class="close-btn">&times;</button>
+        </div>
+        <div class="drawer-meta">
+          <span>共 18 章节 · 覆盖全部考点</span>
+          <button id="btn-reset-data" class="text-btn danger">清空复习记录</button>
+        </div>
+        <div class="drawer-list" id="drawer-chapter-list">
+          <!-- Dynamic Chapter items inserted by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Score & Diagnostics Modal -->
+    <div id="exam-score-modal" class="drawer-overlay hidden">
+      <div class="drawer-content score-modal-content">
+        <div class="drawer-header">
+          <h2>🏆 模考诊断与薄弱点透视</h2>
+          <button id="btn-close-score" class="close-btn">&times;</button>
+        </div>
+        <div class="score-summary-box">
+          <div class="score-circle">
+            <span id="score-percentage" class="score-num">0%</span>
+            <span class="score-label">总正确率</span>
+          </div>
+          <div class="score-details">
+            <div>已答题数: <b id="score-answered">0</b> / <span id="score-total">0</span></div>
+            <div>正确题数: <b id="score-correct" style="color:var(--success-color);">0</b></div>
+            <div>本次用时: <b id="score-duration">00:00</b></div>
+          </div>
+        </div>
+        <h4 style="margin: 14px 0 8px 0; font-size: 0.88rem; color: var(--text-primary); font-weight:700;">🎯 各章节掌握度与薄弱诊断</h4>
+        <div id="chapter-diagnostics-list" class="diagnostics-list">
+          <!-- Dynamic chapter diagnostics inserted by JS -->
+        </div>
+        <button id="btn-review-exam-wrongs" class="action-btn primary" style="margin-top:14px; width:100%;">查看本次模考错题</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

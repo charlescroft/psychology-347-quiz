@@ -1,4 +1,6 @@
-/**
+# -*- coding: utf-8 -*-
+
+app_code = r'''/**
  * 心理学导论 · 全章节刷题与背诵系统 (347备考)
  * Client Application Logic
  * - 支持：刷题练习、全真随机模考、无剧透错题重练本、背诵速记、收藏夹
@@ -1562,3 +1564,9 @@
     init();
   }
 })();
+'''
+
+with open("/Volumes/Ext/dev/python/pdf_compressor/web/app.js", "w", encoding="utf-8") as f:
+    f.write(app_code)
+
+print("Successfully written clean retest-enabled web/app.js!")

@@ -22,6 +22,10 @@
           <span id="current-chapter-subtitle" class="sub-badge">18章完整真题知识点</span>
         </div>
         <div class="header-actions">
+          <button id="btn-sync-toggle" class="sync-status-btn" aria-label="云同步设置">
+            <span class="sync-icon">☁️</span>
+            <span id="sync-status-text" class="sync-status-text">本地</span>
+          </button>
           <button id="btn-search-toggle" class="icon-btn" aria-label="搜索">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </button>
@@ -170,6 +174,49 @@
           <!-- Dynamic chapter diagnostics inserted by JS -->
         </div>
         <button id="btn-review-exam-wrongs" class="action-btn primary" style="margin-top:14px; width:100%;">查看本次模考错题</button>
+      </div>
+    </div>
+
+    <!-- Cloud Sync Modal (Cloudflare KV) -->
+    <div id="sync-modal" class="drawer-overlay hidden">
+      <div class="drawer-content sync-modal-content">
+        <div class="drawer-header">
+          <h2>☁️ 多端云同步 (Cloudflare KV)</h2>
+          <button id="btn-close-sync" class="close-btn">&times;</button>
+        </div>
+        <div class="sync-status-card">
+          <div class="sync-card-icon">📱 ↔️ 💻</div>
+          <div class="sync-card-info">
+            <div id="sync-user-status" style="font-weight:700; color:var(--text-primary);">当前状态: 本地离线模式</div>
+            <div id="sync-last-time" style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">刷题数据保存在当前设备 localStorage 中</div>
+          </div>
+        </div>
+
+        <!-- Login / Connect Form -->
+        <div id="sync-form-area" class="sync-form-area">
+          <div class="form-group">
+            <label for="sync-username-input">同步用户名：</label>
+            <input type="text" id="sync-username-input" placeholder="输入自定义用户名 (如: charles)" autocomplete="username" />
+          </div>
+          <div class="form-group">
+            <label for="sync-password-input">同步密钥 / 密码：</label>
+            <input type="password" id="sync-password-input" placeholder="输入同步密钥 (多设备保持一致即可)" autocomplete="current-password" />
+          </div>
+          <div class="sync-tip-box">
+            💡 <b>说明</b>：登录不是必须的。不登录时数据完整保存在手机本地；在多台手机、电脑上输入相同的用户名与密码，即可一键多端双向同步做题记录、收藏夹与错题本！
+          </div>
+          <div class="form-actions" id="sync-form-actions">
+            <button id="btn-do-login" class="action-btn primary" style="width:100%;">绑定并拉取云端同步</button>
+          </div>
+        </div>
+
+        <!-- Logged-in Controls -->
+        <div id="sync-logged-area" class="sync-logged-area hidden">
+          <div class="sync-actions-row">
+            <button id="btn-do-manual-sync" class="action-btn primary">🔄 立即双向同步</button>
+            <button id="btn-do-logout" class="action-btn outline danger">退出登录 (切回本地)</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -7,6 +7,10 @@ account_id = "697914996ff10a8db042bceddf4fb126"
 directory = "./web"
 binding = "ASSETS"
 
+[[kv_namespaces]]
+binding = "PSYCH_KV"
+id = "cb742ba3265946039f62c39b38e72206"
+
 [[routes]]
 pattern = "347.northplustwentytwo.dpdns.org"
 custom_domain = true

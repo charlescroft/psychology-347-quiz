@@ -1,4 +1,6 @@
-/**
+# -*- coding: utf-8 -*-
+
+code = r'''/**
  * 心理学导论 · 全章节刷题与背诵系统 (347备考)
  * Client Application Logic (Full Enhanced Version with Cloud Sync & Interactive Blank/Short)
  */
@@ -1364,3 +1366,9 @@
     init();
   }
 })();
+'''
+
+with open("/Volumes/Ext/dev/python/pdf_compressor/web/app.js", "w", encoding="utf-8") as f:
+    f.write(code)
+
+print("Updated web/app.js successfully!")

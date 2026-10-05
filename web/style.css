@@ -1064,3 +1064,244 @@ body {
   text-align: right;
 }
 
+/* ================= CLOUD SYNC HEADER BUTTON ================= */
+.sync-status-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.sync-status-btn:hover {
+  background: var(--accent-light);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+.sync-status-btn.synced {
+  border-color: var(--success-color);
+  color: var(--success-color);
+  background: var(--success-light);
+}
+
+/* ================= INTERACTIVE BLANK QUESTIONS ================= */
+.blank-interactive-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.blank-text-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.blank-text-input:focus {
+  border-color: var(--accent-color);
+  background: var(--bg-card);
+}
+
+.blank-actions-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mini-score-btn {
+  padding: 6px 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.mini-score-btn.correct.active {
+  background: var(--success-color);
+  color: #fff;
+  border-color: var(--success-color);
+}
+.mini-score-btn.wrong.active {
+  background: var(--danger-color);
+  color: #fff;
+  border-color: var(--danger-color);
+}
+
+/* ================= INTERACTIVE SHORT ANSWER QUESTIONS ================= */
+.short-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.short-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  resize: vertical;
+  min-height: 72px;
+  outline: none;
+  font-family: var(--font-sans);
+  transition: border-color 0.15s;
+}
+.short-textarea:focus {
+  border-color: var(--accent-color);
+  background: var(--bg-card);
+}
+
+.points-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.point-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--bg-primary);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 3px solid var(--accent-color);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+.point-check-item input[type="checkbox"] {
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--accent-color);
+}
+
+.quick-score-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.quick-score-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.score-pill-btn {
+  flex: 1;
+  padding: 6px 4px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+.score-pill-btn.active-full {
+  background: var(--success-color);
+  color: #fff;
+  border-color: var(--success-color);
+}
+.score-pill-btn.active-pass {
+  background: var(--warning-color);
+  color: #fff;
+  border-color: var(--warning-color);
+}
+.score-pill-btn.active-zero {
+  background: var(--danger-color);
+  color: #fff;
+  border-color: var(--danger-color);
+}
+
+/* ================= CLOUD SYNC MODAL ================= */
+.sync-modal-content {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.sync-status-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin: 12px 0;
+}
+
+.sync-card-icon {
+  font-size: 1.8rem;
+}
+
+.sync-form-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-group input {
+  padding: 9px 12px;
+  font-size: 0.88rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+}
+.form-group input:focus {
+  border-color: var(--accent-color);
+  background: var(--bg-card);
+}
+
+.sync-tip-box {
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.sync-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+

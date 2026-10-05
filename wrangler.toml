@@ -6,3 +6,7 @@ account_id = "697914996ff10a8db042bceddf4fb126"
 [assets]
 directory = "./web"
 binding = "ASSETS"
+
+[[routes]]
+pattern = "347.northplustwentytwo.dpdns.org"
+custom_domain = true

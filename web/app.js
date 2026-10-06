@@ -63,6 +63,7 @@
     currentChapterSubtitle: document.getElementById('current-chapter-subtitle'),
     chapterDescBanner: document.getElementById('chapter-desc-banner'),
     chapterDescText: document.getElementById('chapter-desc-text'),
+    btnResetChapter: document.getElementById('btn-reset-chapter'),
     btnToggleDiagram: document.getElementById('btn-toggle-diagram'),
     chapterDiagramBox: document.getElementById('chapter-diagram-box'),
     btnCloseDiagram: document.getElementById('btn-close-diagram'),
@@ -504,6 +505,11 @@
       }
     });
 
+    // Reset Current Chapter Answers Event
+    if (els.btnResetChapter) {
+      els.btnResetChapter.addEventListener('click', resetCurrentChapterAnswers);
+    }
+
     // Diagram Toggle Events
     if (els.btnToggleDiagram) {
       els.btnToggleDiagram.addEventListener('click', toggleDiagram);
@@ -557,6 +563,26 @@
         renderQuestions();
       });
     }
+  }
+
+  // ================= CHAPTER LEVEL RESET =================
+  function resetCurrentChapterAnswers() {
+    if (state.currentChapterId === 'all') {
+      if (!confirm('确认清空全书所有题目的作答记录，重新开始自测？')) return;
+      state.userAnswers = {};
+    } else {
+      const ch = state.chapters.find((c) => c.id === state.currentChapterId);
+      const chName = ch ? ch.title : `第${state.currentChapterId}章`;
+      if (!confirm(`确认清空【${chName}】的所有作答记录，重新开始自测？`)) return;
+      const chQuestions = state.questions.filter((q) => q.chapterId === state.currentChapterId);
+      chQuestions.forEach((q) => {
+        delete state.userAnswers[q.id];
+      });
+    }
+    saveLocalData();
+    updateStats();
+    renderQuestions();
+    triggerAutoSync();
   }
 
   // ================= RANDOM EXAM MODE =================
@@ -1233,7 +1259,7 @@
               }
             }
 
-            const isDisabled = activeAnswer && (!isExamMode || state.examSubmitted);
+            const isDisabled = isExamMode && state.examSubmitted;
 
             return `
               <button class="${optClass}" data-qid="${q.id}" data-opt="${optKey}" ${isDisabled ? 'disabled' : ''}>
@@ -1297,7 +1323,7 @@
         }
       }
 
-      const isDisabled = activeAnswer && (!isExamMode || state.examSubmitted);
+      const isDisabled = isExamMode && state.examSubmitted;
 
       bodyHtml = `
         <div class="judge-options-row">
@@ -1355,7 +1381,7 @@
             id="blank-input-${q.id}"
             placeholder="输入你的填空词（多个关键词可用逗号或空格隔开）..."
             value="${escapeHtml(userText)}"
-            ${activeAnswer && (!isExamMode || state.examSubmitted) ? 'disabled' : ''}
+            ${isExamMode && state.examSubmitted ? 'disabled' : ''}
           />
           <div class="blank-actions-row">
             <button class="action-btn primary check-blank-btn" data-qid="${q.id}" style="flex:1;">

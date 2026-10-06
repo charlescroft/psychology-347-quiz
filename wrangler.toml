@@ -8,8 +8,8 @@ directory = "./web"
 binding = "ASSETS"
 
 [vars]
-# 专属授权认证码（已设置为您指定的专属防滥用密钥）
-AUTH_CODES = "Nap_7tHePod3¥！@"
+# 授权认证码列表（支持多个代码共存，英文逗号隔开；保留全部历史有效代码，确保老用户无感平滑同步）
+AUTH_CODES = "Nap_7tHePod3¥！@,swjtu347_master_vip,psych347,cf_auth_2026,swjtu347"
 
 [[kv_namespaces]]
 binding = "PSYCH_KV"

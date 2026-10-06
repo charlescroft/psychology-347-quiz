@@ -34,14 +34,14 @@ function isAuthCodeValid(env, inputCode) {
   const raw = env.AUTH_CODES || env.AUTH_CODE || '';
   const allowed = raw
     .split(',')
-    .map((s) => s.trim().toLowerCase())
+    .map((s) => s.trim())
     .filter(Boolean);
 
   // If no auth code configured in environment, allow by default
   if (allowed.length === 0) return true;
 
-  const given = (inputCode || '').trim().toLowerCase();
-  return allowed.includes(given);
+  const given = (inputCode || '').trim();
+  return allowed.includes(given) || allowed.map((s) => s.toLowerCase()).includes(given.toLowerCase());
 }
 
 async function handleSyncApi(request, env, url) {

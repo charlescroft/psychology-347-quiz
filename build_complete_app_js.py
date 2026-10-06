@@ -1,4 +1,6 @@
-/**
+# -*- coding: utf-8 -*-
+
+code = r'''/**
  * 心理学导论 · 全章节刷题、模考与抽背系统 (347备考)
  * Client Application Logic (Final Complete Version)
  * - 刷题练习模式：单选题、判断题、填空题交互输入核对、简答题草稿与得分点自评
@@ -1839,3 +1841,9 @@
     init();
   }
 })();
+'''
+
+with open("/Volumes/Ext/dev/python/pdf_compressor/web/app.js", "w", encoding="utf-8") as f:
+    f.write(code)
+
+print("Updated web/app.js with full Recitation Flashcards & Quiz dual-mode logic!")

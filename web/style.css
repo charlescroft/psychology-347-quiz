@@ -1353,3 +1353,182 @@ body {
   border-color: var(--accent-color);
   color: var(--accent-color);
 }
+
+/* ================= RECITATION / FLASHCARD TOOLBAR & CARDS ================= */
+.recitation-toolbar {
+  background: var(--bg-card);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  animation: fadeIn 0.2s ease;
+}
+
+.recite-toolbar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.recite-filter-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.recite-filter-row::-webkit-scrollbar {
+  display: none;
+}
+
+.recite-chip {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.recite-chip.active {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: var(--accent-color);
+  font-weight: 600;
+}
+
+.recite-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 0.76rem;
+}
+
+/* Flashcard Specific Styles */
+.flashcard {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+
+.flashcard:hover {
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-md);
+}
+
+.flashcard.revealed {
+  border-color: var(--accent-color);
+  cursor: default;
+}
+
+.flashcard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.flashcard-prompt {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.flashcard-reveal-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--accent-light);
+  border: 1px dashed var(--accent-color);
+  color: var(--accent-color);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: all 0.15s;
+}
+.flashcard-reveal-hint:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+.flashcard-answer-box {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  animation: fadeIn 0.25s ease;
+}
+
+.flashcard-answer-text {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  background: var(--bg-primary);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  margin-top: 6px;
+  white-space: pre-line;
+}
+
+.flashcard-status-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.recite-status-btn {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.recite-status-btn.mastered.active {
+  background: var(--success-color);
+  color: #fff;
+  border-color: var(--success-color);
+}
+.recite-status-btn.need-review.active {
+  background: var(--danger-color);
+  color: #fff;
+  border-color: var(--danger-color);
+}
+
+/* Flashcard random draw glowing animation */
+.glow-highlight {
+  animation: pulseGlow 1.8s ease-in-out infinite;
+  border-color: #f59e0b !important;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); transform: scale(1); }
+  50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); transform: scale(1.015); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); transform: scale(1); }
+}

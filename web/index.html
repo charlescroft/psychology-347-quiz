@@ -46,7 +46,7 @@
         <div class="mode-tabs">
           <button class="mode-tab active" data-mode="practice">📝 刷题练习</button>
           <button class="mode-tab" data-mode="random">🎲 随机模考</button>
-          <button class="mode-tab" data-mode="recite">📖 背诵速记</button>
+          <button class="mode-tab" data-mode="recite">📖 考点抽背</button>
           <button class="mode-tab" data-mode="wrong">❌ 错题本 (<span id="wrong-count">0</span>)</button>
           <button class="mode-tab" data-mode="star">⭐ 收藏 (<span id="star-count">0</span>)</button>
         </div>
@@ -104,6 +104,28 @@
         <div class="exam-actions-row">
           <button id="btn-re-sample" class="action-btn outline">🔄 换一批随机题</button>
           <button id="btn-submit-exam" class="action-btn primary">📊 提交交卷 & 查看诊断报告</button>
+        </div>
+      </div>
+
+      <!-- Dedicated Recitation / Oral Flashcard Control Panel (shown only in recite mode) -->
+      <div id="recitation-toolbar" class="recitation-toolbar hidden">
+        <div class="recite-toolbar-header">
+          <div>
+            <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--accent-color);">📖 考研考点抽背闪卡（原书与笔记原文）</h3>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">纯净“概念/问题-答案”抽背模式，点击卡片即可翻看踩点清单</span>
+          </div>
+          <button id="btn-random-recite" class="action-btn primary mini" style="flex: initial;">🎲 随机抽背一题</button>
+        </div>
+        <div class="recite-filter-row">
+          <button class="recite-chip active" data-recite-filter="all">全部考点 (<span id="recite-all-count">0</span>)</button>
+          <button class="recite-chip" data-recite-filter="essay">简答大题 (标J/必背) (<span id="recite-essay-count">0</span>)</button>
+          <button class="recite-chip" data-recite-filter="noun">名词解释/概念 (<span id="recite-noun-count">0</span>)</button>
+          <button class="recite-chip" data-recite-filter="review">未背出/待巩固 (<span id="recite-review-count">0</span>)</button>
+        </div>
+        <div class="recite-quick-actions">
+          <button id="btn-expand-all-recite" class="text-btn">👁️ 全部展开答案</button>
+          <span class="sep" style="color:var(--border-color);">•</span>
+          <button id="btn-collapse-all-recite" class="text-btn">🙈 全部折叠答案</button>
         </div>
       </div>
 
